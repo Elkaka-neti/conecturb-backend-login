@@ -29,6 +29,8 @@ class Database {
       throw err;
     }
   }
+  
+  
 }
 
-module.exports = new Database();
+module.exports = Database;
