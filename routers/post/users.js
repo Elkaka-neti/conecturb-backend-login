@@ -14,7 +14,7 @@ module.exports = async function createUser(req, res) {
 
     const result = await Database.query(
       'INSERT INTO Users (name, email, password, telefone, role) VALUES (?, ?, ?, ?, ?)',
-      [name, email, hashedPassword, telefone || null, role || 'user']
+      [name, email, hashedPassword, telefone || null, role || 'client']
     );
 
     
