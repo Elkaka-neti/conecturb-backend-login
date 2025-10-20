@@ -1,4 +1,4 @@
-const Database = require('../../Database/mainDatabase');
+const Database = require('../../src/Database/mainDatabase');
 
 module.exports = (req, res) => {
   var id = req.query.userId;
