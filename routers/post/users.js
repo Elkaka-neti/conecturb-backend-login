@@ -7,7 +7,7 @@ module.exports = async function createUser(req, res) {
     const { name, email, telefone, role, password } = req.body.data;
 
     if (!name || !email || !password) {
-      return res.status(400).json({ message: 'Dados invalidos' });
+      return res.status(400).json({ message: 'Dados invalidos: Forneça {name} {email} e {password} pelo menos.' });
     }
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -29,11 +29,13 @@ module.exports = async function createUser(req, res) {
       { expiresIn: '25m' }
     );
 
-    const refreshToken = jwt.sign(
+    const refreshToken = await jwt.sign(
       { id: userId },
       "chavedeAssinaturaRefres",
       { expiresIn: '7d' }
     );
+    
+    await Database.query('UPDATE Users SET refreshToken = ? WHERE id = ?', [refreshToken, userId])
 
     return res.status(201).json({
       message: 'Usuário criado com sucesso!',
